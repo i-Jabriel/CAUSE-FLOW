@@ -32,12 +32,14 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
                 className={`flex flex-col items-center group ${onStepClick ? 'cursor-pointer' : 'cursor-default'}`}
               >
                 <div
-                  className={`
-                    w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all
-                    ${isCompleted ? 'bg-black border-black text-white' : ''}
-                    ${isCurrent ? 'bg-black border-black text-white ring-4 ring-zinc-200' : ''}
-                    ${isUpcoming ? 'bg-white border-zinc-300 text-zinc-400' : ''}
-                  `}
+                  className="w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all"
+                  style={
+                    isCompleted
+                      ? { backgroundColor: '#6EEDC7', borderColor: '#6EEDC7', color: '#012340' }
+                      : isCurrent
+                      ? { backgroundColor: '#012340', borderColor: '#6EEDC7', color: '#6EEDC7', boxShadow: '0 0 0 4px rgba(110,237,199,0.2)' }
+                      : { backgroundColor: 'white', borderColor: '#e4e4e7', color: '#a1a1aa' }
+                  }
                 >
                   {isCompleted ? (
                     <Check size={14} strokeWidth={2.5} />
@@ -46,12 +48,14 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
                   )}
                 </div>
                 <span
-                  className={`
-                    mt-2 text-xs font-medium leading-tight text-center max-w-[80px]
-                    ${isCurrent ? 'text-black' : ''}
-                    ${isCompleted ? 'text-zinc-500' : ''}
-                    ${isUpcoming ? 'text-zinc-300' : ''}
-                  `}
+                  className="mt-2 text-xs font-medium leading-tight text-center max-w-[80px]"
+                  style={
+                    isCurrent
+                      ? { color: '#012340' }
+                      : isCompleted
+                      ? { color: '#3DD9AC' }
+                      : { color: '#d4d4d8' }
+                  }
                 >
                   {STAGE_LABELS[stage]}
                 </span>
@@ -61,9 +65,8 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
               {idx < STAGE_ORDER.length - 1 && (
                 <div className="flex-1 mx-2 mb-5">
                   <div
-                    className={`h-px transition-all ${
-                      idx < currentIdx ? 'bg-black' : 'bg-zinc-200'
-                    }`}
+                    className="h-0.5 transition-all rounded-full"
+                    style={{ backgroundColor: idx < currentIdx ? '#6EEDC7' : '#e4e4e7' }}
                   />
                 </div>
               )}
@@ -81,13 +84,14 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
             return (
               <div
                 key={stage}
-                className={`flex-shrink-0 px-3 py-1 rounded-full text-xs font-medium border transition-all ${
+                className="flex-shrink-0 px-3 py-1 rounded-full text-xs font-medium border transition-all"
+                style={
                   isCurrent
-                    ? 'bg-black text-white border-black'
+                    ? { backgroundColor: '#012340', color: '#6EEDC7', borderColor: '#6EEDC7' }
                     : isCompleted
-                    ? 'bg-zinc-100 text-zinc-500 border-zinc-200'
-                    : 'bg-white text-zinc-300 border-zinc-200'
-                }`}
+                    ? { backgroundColor: 'rgba(110,237,199,0.1)', color: '#3DD9AC', borderColor: '#6EEDC7' }
+                    : { backgroundColor: 'white', color: '#d4d4d8', borderColor: '#e4e4e7' }
+                }
               >
                 {STAGE_LABELS[stage]}
               </div>

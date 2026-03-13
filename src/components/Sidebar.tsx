@@ -44,14 +44,14 @@ export const Sidebar: React.FC = () => {
   ).length;
 
   return (
-    <aside className="w-60 flex-shrink-0 bg-white border-r border-zinc-200 min-h-screen flex flex-col">
+    <aside className="w-60 flex-shrink-0 min-h-screen flex flex-col" style={{ backgroundColor: '#012340' }}>
       {/* Brand */}
-      <div className="px-6 py-6 border-b border-zinc-100">
+      <div className="px-6 py-6" style={{ borderBottom: '1px solid rgba(110,237,199,0.15)' }}>
         <div className="flex items-baseline gap-0">
-          <span className="text-2xl font-black tracking-tight text-black">CAUSE</span>
-          <span className="text-2xl font-light tracking-wider text-zinc-400">FLOW</span>
+          <span className="text-2xl font-black tracking-tight" style={{ color: '#6EEDC7' }}>CAUSE</span>
+          <span className="text-2xl font-light tracking-wider text-white/50">FLOW</span>
         </div>
-        <p className="text-xs text-zinc-400 mt-0.5 tracking-widest uppercase">
+        <p className="text-xs mt-0.5 tracking-widest uppercase" style={{ color: 'rgba(208,239,242,0.5)' }}>
           Workflow Pipeline
         </p>
       </div>
@@ -64,11 +64,14 @@ export const Sidebar: React.FC = () => {
             to={to}
             end={exact}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              `flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-black text-white'
-                  : 'text-zinc-600 hover:bg-zinc-100 hover:text-black'
+                  ? 'text-[#012340] font-semibold'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
               }`
+            }
+            style={({ isActive }) =>
+              isActive ? { backgroundColor: '#6EEDC7', color: '#012340' } : {}
             }
           >
             <Icon size={16} />
@@ -81,13 +84,16 @@ export const Sidebar: React.FC = () => {
       <div className="px-3 pb-4">
         <NavLink
           to="/projects/new"
-          className={({ isActive }) =>
-            `flex items-center justify-center gap-2 w-full py-2 rounded-md text-sm font-semibold border transition-all ${
-              isActive
-                ? 'bg-black text-white border-black'
-                : 'border-black text-black hover:bg-black hover:text-white'
-            }`
-          }
+          className="flex items-center justify-center gap-2 w-full py-2 rounded-md text-sm font-semibold border transition-all"
+          style={{ borderColor: '#6EEDC7', color: '#6EEDC7' }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.backgroundColor = '#6EEDC7';
+            (e.currentTarget as HTMLElement).style.color = '#012340';
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
+            (e.currentTarget as HTMLElement).style.color = '#6EEDC7';
+          }}
         >
           <Plus size={14} />
           New Project
@@ -95,8 +101,8 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Pipeline Status Summary */}
-      <div className="px-3 py-4 border-t border-zinc-100 flex-1">
-        <p className="text-xs font-semibold text-zinc-400 tracking-widest uppercase px-3 mb-3">
+      <div className="px-3 py-4 flex-1" style={{ borderTop: '1px solid rgba(110,237,199,0.15)' }}>
+        <p className="text-xs font-semibold tracking-widest uppercase px-3 mb-3" style={{ color: 'rgba(208,239,242,0.4)' }}>
           Pipeline
         </p>
         <div className="space-y-1">
@@ -107,12 +113,13 @@ export const Sidebar: React.FC = () => {
               <NavLink
                 key={status}
                 to={`/projects?status=${status}`}
-                className="flex items-center justify-between px-3 py-1.5 rounded-md hover:bg-zinc-50 group"
+                className="flex items-center justify-between px-3 py-1.5 rounded-md transition-all group"
+                style={{ color: 'rgba(208,239,242,0.6)' }}
+                onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.07)'}
+                onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent'}
               >
-                <span className="text-xs text-zinc-500 group-hover:text-zinc-800 transition-colors">
-                  {STATUS_SHORT[status]}
-                </span>
-                <span className="text-xs font-semibold text-zinc-800 bg-zinc-100 px-1.5 py-0.5 rounded">
+                <span className="text-xs">{STATUS_SHORT[status]}</span>
+                <span className="text-xs font-bold px-1.5 py-0.5 rounded" style={{ backgroundColor: 'rgba(110,237,199,0.15)', color: '#6EEDC7' }}>
                   {count}
                 </span>
               </NavLink>
@@ -122,14 +129,14 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <div className="px-6 py-4 border-t border-zinc-100">
+      <div className="px-6 py-4" style={{ borderTop: '1px solid rgba(110,237,199,0.15)' }}>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-xs font-medium text-zinc-800">{activeCount} active</p>
-            <p className="text-xs text-zinc-400">{projects.length} total projects</p>
+            <p className="text-xs font-medium text-white/80">{activeCount} active</p>
+            <p className="text-xs" style={{ color: 'rgba(208,239,242,0.4)' }}>{projects.length} total projects</p>
           </div>
-          <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-bold">C</span>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: '#6EEDC7' }}>
+            <span className="text-xs font-black" style={{ color: '#012340' }}>C</span>
           </div>
         </div>
       </div>

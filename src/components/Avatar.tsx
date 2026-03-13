@@ -1,11 +1,12 @@
 import React from 'react';
 import type { TeamMember } from '../types';
 
-const ROLE_COLORS: Record<string, string> = {
-  business_developer: 'bg-black text-white',
-  project_manager: 'bg-[#2A4570] text-white',
-  creative: 'bg-[#3D6494] text-white',
-  operations: 'bg-[#7A9BBF] text-white',
+// CAUSE brand palette per role
+const ROLE_STYLE: Record<string, React.CSSProperties> = {
+  business_developer: { backgroundColor: '#012340', color: '#6EEDC7' },
+  project_manager:    { backgroundColor: '#0A3D6B', color: '#D0EFF2' },
+  creative:           { backgroundColor: '#6EEDC7', color: '#012340' },
+  operations:         { backgroundColor: '#D0EFF2', color: '#012340' },
 };
 
 interface AvatarProps {
@@ -29,18 +30,20 @@ export const Avatar: React.FC<AvatarProps> = ({
   showName = false,
   showRole = false,
 }) => {
-  const colorClass = ROLE_COLORS[member.role] || 'bg-zinc-600 text-white';
+  const roleStyle = ROLE_STYLE[member.role] || { backgroundColor: '#012340', color: '#6EEDC7' };
   const sizeClass = SIZE_CLASSES[size];
 
   const avatarEl = member.avatar ? (
     <img
       src={member.avatar}
       alt={member.name}
-      className={`${sizeClass} rounded-full object-cover border border-zinc-200 flex-shrink-0`}
+      className={`${sizeClass} rounded-full object-cover flex-shrink-0`}
+      style={{ border: '2px solid rgba(110,237,199,0.3)' }}
     />
   ) : (
     <div
-      className={`${sizeClass} ${colorClass} rounded-full flex items-center justify-center font-semibold flex-shrink-0 select-none border border-zinc-200`}
+      className={`${sizeClass} rounded-full flex items-center justify-center font-bold flex-shrink-0 select-none`}
+      style={{ ...roleStyle, border: '2px solid rgba(110,237,199,0.2)' }}
     >
       {member.initials}
     </div>
@@ -53,7 +56,7 @@ export const Avatar: React.FC<AvatarProps> = ({
       {avatarEl}
       <div>
         {showName && (
-          <p className="text-sm font-medium text-zinc-900 leading-tight">{member.name}</p>
+          <p className="text-sm font-medium leading-tight" style={{ color: '#012340' }}>{member.name}</p>
         )}
         {showRole && (
           <p className="text-xs text-zinc-500 leading-tight">{member.title}</p>
@@ -77,30 +80,34 @@ export const AvatarGroup: React.FC<AvatarGroupProps> = ({
   const visible = members.slice(0, max);
   const overflow = members.length - max;
   const sizeClass = SIZE_CLASSES[size];
-  const colorClass = ROLE_COLORS;
 
   return (
     <div className="flex -space-x-2">
-      {visible.map((m) => (
-        <div key={m.id} className="relative" title={m.name}>
-          {m.avatar ? (
-            <img
-              src={m.avatar}
-              alt={m.name}
-              className={`${sizeClass} rounded-full object-cover border-2 border-white flex-shrink-0`}
-            />
-          ) : (
-            <div
-              className={`${sizeClass} ${colorClass[m.role] || 'bg-zinc-600 text-white'} rounded-full flex items-center justify-center font-semibold text-xs border-2 border-white flex-shrink-0 select-none`}
-            >
-              {m.initials}
-            </div>
-          )}
-        </div>
-      ))}
+      {visible.map((m) => {
+        const roleStyle = ROLE_STYLE[m.role] || { backgroundColor: '#012340', color: '#6EEDC7' };
+        return (
+          <div key={m.id} className="relative" title={m.name}>
+            {m.avatar ? (
+              <img
+                src={m.avatar}
+                alt={m.name}
+                className={`${sizeClass} rounded-full object-cover border-2 border-white flex-shrink-0`}
+              />
+            ) : (
+              <div
+                className={`${sizeClass} rounded-full flex items-center justify-center font-bold text-xs border-2 border-white flex-shrink-0 select-none`}
+                style={roleStyle}
+              >
+                {m.initials}
+              </div>
+            )}
+          </div>
+        );
+      })}
       {overflow > 0 && (
         <div
-          className={`${sizeClass} bg-zinc-200 text-zinc-600 rounded-full flex items-center justify-center font-semibold text-xs border-2 border-white flex-shrink-0`}
+          className={`${sizeClass} rounded-full flex items-center justify-center font-semibold text-xs border-2 border-white flex-shrink-0`}
+          style={{ backgroundColor: '#D0EFF2', color: '#012340' }}
         >
           +{overflow}
         </div>

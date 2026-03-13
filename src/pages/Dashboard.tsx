@@ -63,7 +63,8 @@ export const Dashboard: React.FC = () => {
         </div>
         <Link
           to="/projects/new"
-          className="flex items-center gap-2 bg-black text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-zinc-800 transition-colors"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+          style={{ backgroundColor: '#6EEDC7', color: '#012340' }}
         >
           <Plus size={16} />
           New Project
@@ -73,15 +74,15 @@ export const Dashboard: React.FC = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         {[
-          { label: 'Total Projects', value: stats.total },
-          { label: 'Active', value: stats.active },
-          { label: 'In Production', value: stats.inProduction },
-          { label: 'Awaiting Approval', value: stats.pendingApproval },
-          { label: 'Delivered', value: stats.delivered },
-        ].map(({ label, value }) => (
-          <div key={label} className="bg-white border border-zinc-200 rounded-xl p-4">
-            <p className="text-3xl font-black text-black">{value}</p>
-            <p className="text-xs text-zinc-500 mt-1">{label}</p>
+          { label: 'Total Projects', value: stats.total, accent: false },
+          { label: 'Active', value: stats.active, accent: true },
+          { label: 'In Production', value: stats.inProduction, accent: false },
+          { label: 'Awaiting Approval', value: stats.pendingApproval, accent: false },
+          { label: 'Delivered', value: stats.delivered, accent: false },
+        ].map(({ label, value, accent }) => (
+          <div key={label} className="rounded-xl p-4 border" style={accent ? { backgroundColor: '#012340', borderColor: '#012340' } : { backgroundColor: 'white', borderColor: '#e4e4e7' }}>
+            <p className="text-3xl font-black" style={{ color: accent ? '#6EEDC7' : '#012340' }}>{value}</p>
+            <p className="text-xs mt-1" style={{ color: accent ? 'rgba(208,239,242,0.7)' : '#71717a' }}>{label}</p>
           </div>
         ))}
       </div>
@@ -139,7 +140,10 @@ export const Dashboard: React.FC = () => {
               <Link
                 key={project.id}
                 to={`/projects/${project.id}`}
-                className="bg-white border border-zinc-200 rounded-xl p-5 hover:border-black hover:shadow-lg transition-all group block"
+                className="bg-white border rounded-xl p-5 transition-all group block"
+                style={{ borderColor: '#e4e4e7' }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#6EEDC7'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 24px rgba(110,237,199,0.15)'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = '#e4e4e7'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
               >
                 {/* Top row */}
                 <div className="flex items-start justify-between mb-3">
@@ -164,10 +168,10 @@ export const Dashboard: React.FC = () => {
                     <span className="text-xs text-zinc-500">{STAGE_LABELS[project.status]}</span>
                     <span className="text-xs font-semibold text-zinc-600">{stageProgress}%</span>
                   </div>
-                  <div className="h-1 bg-zinc-100 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-zinc-100 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-black rounded-full transition-all"
-                      style={{ width: `${stageProgress}%` }}
+                      className="h-full rounded-full transition-all"
+                      style={{ backgroundColor: '#6EEDC7', width: `${stageProgress}%` }}
                     />
                   </div>
                 </div>
