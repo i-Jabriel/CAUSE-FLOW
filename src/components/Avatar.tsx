@@ -3,9 +3,9 @@ import type { TeamMember } from '../types';
 
 const ROLE_COLORS: Record<string, string> = {
   business_developer: 'bg-black text-white',
-  project_manager: 'bg-zinc-700 text-white',
-  creative: 'bg-zinc-500 text-white',
-  operations: 'bg-zinc-400 text-black',
+  project_manager: 'bg-[#2A4570] text-white',
+  creative: 'bg-[#3D6494] text-white',
+  operations: 'bg-[#7A9BBF] text-white',
 };
 
 interface AvatarProps {

@@ -10,8 +10,10 @@ export default {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       colors: {
+        // Override black with CAUSE brand navy
+        black: '#1B2D4A',
         cause: {
-          black: '#0A0A0A',
+          navy: '#1B2D4A',
           white: '#FAFAFA',
           gray: {
             50: '#F9F9F9',
